@@ -31,16 +31,16 @@ function showSuggestions(results, inputVal) {
 
 	results.forEach(str => {
 			const li = document.createElement("li");
-			li.innerHTML = str + str[inputVal.length - 1]; // Still figure out how to add bold in each letter.
+			let bold = '<strong>' + str.slice(str.toLowerCase().indexOf(inputVal.toLowerCase()), inputVal.length) + '</strong>';
+			// let bold = "<strong>" + str.slice(str.indexOf(inputVal), inputVal.length) + "</strong>";
+			// li.innerHTML = str.slice(str.length - inputVal.length, inputVal.length) + bold + str.slice(inputVal.length); // Still figure out how to add bold in each letter.
+			li.innerHTML = str.slice(0, str.toLowerCase().indexOf(inputVal.toLowerCase())) + bold + str.slice(inputVal.length);
 			suggestions.append(li);
 	}); 
 }
 
 function useSuggestion(e) {
-	if (e.target.tagName === "HTML" || e.target.tagName == "BODY" || e.target.tagName == "INPUT" || e.target.tagName == "UL") {
-		suggestions.innerHTML = "";
-	}
-	else if (e.target = "suggestions") {
+	if (e.target = "suggestions") {
 		input.value = e.target.innerText;
 		suggestions.innerHTML = "";
 	}
@@ -48,6 +48,3 @@ function useSuggestion(e) {
 
 input.addEventListener('keyup', searchHandler);
 suggestions.addEventListener('click', useSuggestion);
-body.addEventListener('click', useSuggestion);
-html.addEventListener('click', useSuggestion);
-
