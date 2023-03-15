@@ -31,12 +31,24 @@ function showSuggestions(results, inputVal) {
 
 	results.forEach(str => {
 			const li = document.createElement("li");
-			let bold = '<strong>' + str.slice(str.toLowerCase().indexOf(inputVal.toLowerCase()), inputVal.length) + '</strong>';
-			// let bold = "<strong>" + str.slice(str.indexOf(inputVal), inputVal.length) + "</strong>";
-			// li.innerHTML = str.slice(str.length - inputVal.length, inputVal.length) + bold + str.slice(inputVal.length); // Still figure out how to add bold in each letter.
-			li.innerHTML = str.slice(0, str.toLowerCase().indexOf(inputVal.toLowerCase())) + bold + str.slice(inputVal.length);
+			
+			let bold = '<strong>' + str.slice(str.toLowerCase().indexOf(inputVal.toLowerCase())) + '</strong>';
+			li.innerHTML = str.slice(0, str.toLowerCase().indexOf(inputVal.toLowerCase())) + bold;
 			suggestions.append(li);
 	}); 
+	// results.forEach(str => {
+	// 	const li = document.createElement("li");
+	// 	let boldString = (s, sub) => s.replace(RegExp(sub, 'g'), `<strong>${sub}</strong>`);
+	// 	li.innerHTML = boldString(str.toLowerCase(), inputVal.toLowerCase());
+	// 	suggestions.append(li);
+	// }); 
+	// results.forEach(str => {
+	// 	const li = document.createElement("li");
+	// 	let bold = '<strong>' + str.slice(str.toLowerCase().indexOf(inputVal.toLowerCase())) + '</strong>';
+	// 	li.innerHTML = bold;
+	// 	suggestions.append(li);
+	// }); 
+
 }
 
 function useSuggestion(e) {
@@ -48,3 +60,23 @@ function useSuggestion(e) {
 
 input.addEventListener('keyup', searchHandler);
 suggestions.addEventListener('click', useSuggestion);
+
+// let a = "Avocado";
+// let b = "oca";
+
+
+// let str = "Hello"
+// let substr = "el"
+// const boldString = (s, subs) => s.replace(RegExp(substr, 'g'), `<strong>${sub}</strong>`);
+
+// results.forEach(str => {
+// 	const li = document.createElement("li");
+// 	li.innerHTML = boldString(str, inputVal);
+// 	suggestions.append(li);
+// }); 
+
+let a = "dragonfruit"
+let b = "gon"
+
+let cut = a.slice(a.indexOf(b), b.length+b.length);
+
