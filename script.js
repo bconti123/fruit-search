@@ -52,7 +52,10 @@ function showSuggestions(results, inputVal) {
 }
 
 function useSuggestion(e) {
-	if (e.target = "suggestions") {
+	if (e.target.tagName === "HTML" || e.target.tagName === "BODY" || e.target.tagName === "UL") {
+		suggestions.innerHTML = "";
+	}
+	else if (e.target = "suggestions") {
 		input.value = e.target.innerText;
 		suggestions.innerHTML = "";
 	}
@@ -60,7 +63,8 @@ function useSuggestion(e) {
 
 input.addEventListener('keyup', searchHandler);
 suggestions.addEventListener('click', useSuggestion);
-
+html.addEventListener('click', useSuggestion);
+body.addEventListener('click', useSuggestion);
 // let a = "Avocado";
 // let b = "oca";
 
@@ -74,6 +78,8 @@ suggestions.addEventListener('click', useSuggestion);
 // 	li.innerHTML = boldString(str, inputVal);
 // 	suggestions.append(li);
 // }); 
+
+// reference: https://stackoverflow.com/questions/29896907/bold-part-of-string
 
 let a = "dragonfruit"
 let b = "gon"
