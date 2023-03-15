@@ -1,5 +1,7 @@
-
-
+body {
+  background: linear-gradient(red, yellow);
+  background-attachment: fixed;
+}
 .search-container {
   position: absolute;
   top: 50%;
