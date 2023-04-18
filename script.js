@@ -100,7 +100,7 @@ function search(str) {
 
   return results;
 }
-
+// When you press any key in input box, function will call showSuggestions and Search functions.
 function searchHandler(e) {
   showSuggestions(search(input.value), input.value);
 }
@@ -131,6 +131,7 @@ function useSuggestion(e) {
     e.target.tagName === "INPUT"
   ) {
     suggestions.innerHTML = "";
+    // if click word as a value in <li>, suggestions.innerHTML's value will be matched to where you click.
   } else if ((e.target = "suggestions")) {
     input.value = e.target.innerText;
     suggestions.innerHTML = "";
