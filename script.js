@@ -1,4 +1,4 @@
-const fruit = [
+const list = [
   "Apple",
   "Apricot",
   "Avocado 🥑",
@@ -79,66 +79,75 @@ const fruit = [
   "Tamarind",
   "Yuzu",
 ];
+class Fruit {
+  constructor() {
+    this.fruit = [...list];
+    this.input = document.querySelector("#fruit");
+    this.suggestions = document.querySelector(".suggestions ul");
+    this.html = document.querySelector("html");
+    this.body = document.querySelector("body");
 
-const input = document.querySelector("#fruit");
-const suggestions = document.querySelector(".suggestions ul");
-const html = document.querySelector("html");
-const body = document.querySelector("body");
+    this.input.addEventListener("keyup", this.searchHandler.bind(this));
+    this.suggestions.addEventListener("click", this.useSuggestion.bind(this));
+    this.html.addEventListener("click", this.useSuggestion.bind(this));
+    this.body.addEventListener("click", this.useSuggestion.bind(this));
+  }
+  search(str) {
+    let results = [];
 
-function search(str) {
-  let results = [];
+    if (str.length === 0) return []; // if str value is empty
 
-  if (str.length === 0) return []; // if str value is empty
+    // Finding word if more than -1. Push word to the result.
+    this.fruit.filter((word) => {
+      let idx = word.toLowerCase().search(str.toLowerCase());
+      if (idx > -1) {
+        results.push(word);
+      }
+    });
 
-  // Finding word if more than -1. Push word to the result.
-  fruit.filter((word) => {
-    let idx = word.toLowerCase().search(str.toLowerCase());
-    if (idx > -1) {
-      results.push(word);
+    return results;
+  }
+  // When you press any key in input box, function will call showSuggestions and Search functions.
+  searchHandler() {
+    this.showSuggestions(this.search(this.input.value), this.input.value);
+  }
+
+  showSuggestions(results, inputVal) {
+    this.suggestions.innerHTML = "";
+
+    results.forEach((str) => {
+      const li = document.createElement("li");
+      // Search, a string is matched to Fruit Array and which are letter becomes bold.
+      let bold =
+        "<strong>" +
+        str.slice(str.toLowerCase().indexOf(inputVal.toLowerCase())) +
+        "</strong>";
+      li.innerHTML =
+        str.slice(0, str.toLowerCase().indexOf(inputVal.toLowerCase())) + bold;
+      // When you type and search matches to letter in arrays, <li> will appear under input box.
+      this.suggestions.append(li);
+    });
+  }
+
+  useSuggestion(e) {
+    // If click anything outside inputbox and <li>, list will disappear.
+    if (
+      e.target.tagName === "HTML" ||
+      e.target.tagName === "BODY" ||
+      e.target.tagName === "UL" ||
+      e.target.tagName === "INPUT"
+    ) {
+      this.suggestions.innerHTML = "";
+      // if click word as a value in <li>, suggestions.innerHTML's value will be matched to where you click.
+    } else if (e.target.tagName === "LI") {
+      this.input.value = e.target.innerText;
+      this.suggestions.innerHTML = "";
+      // To see click on bold letter, input value should be matched to <li>'s value.
+    } else if (e.target.tagName === "STRONG") {
+      this.input.value = e.target.closest("LI").innerText;
+      this.suggestions.innerHTML = "";
     }
-  });
-
-  return results;
-}
-// When you press any key in input box, function will call showSuggestions and Search functions.
-function searchHandler(e) {
-  showSuggestions(search(input.value), input.value);
-}
-
-function showSuggestions(results, inputVal) {
-  suggestions.innerHTML = "";
-
-  results.forEach((str) => {
-    const li = document.createElement("li");
-    // Search, a string is matched to Fruit Array and which are letter becomes bold.
-    let bold =
-      "<strong>" +
-      str.slice(str.toLowerCase().indexOf(inputVal.toLowerCase())) +
-      "</strong>";
-    li.innerHTML =
-      str.slice(0, str.toLowerCase().indexOf(inputVal.toLowerCase())) + bold;
-    // When you type and search matches to letter in arrays, <li> will appear under input box.
-    suggestions.append(li);
-  });
-}
-
-function useSuggestion(e) {
-  // If click anything outside inputbox and <li>, list will disappear.
-  if (
-    e.target.tagName === "HTML" ||
-    e.target.tagName === "BODY" ||
-    e.target.tagName === "UL" ||
-    e.target.tagName === "INPUT"
-  ) {
-    suggestions.innerHTML = "";
-    // if click word as a value in <li>, suggestions.innerHTML's value will be matched to where you click.
-  } else if ((e.target = "suggestions")) {
-    input.value = e.target.innerText;
-    suggestions.innerHTML = "";
+    console.log(e.target.tagName);
   }
 }
-
-input.addEventListener("keyup", searchHandler);
-suggestions.addEventListener("click", useSuggestion);
-html.addEventListener("click", useSuggestion);
-body.addEventListener("click", useSuggestion);
+const fruits = new Fruit();
