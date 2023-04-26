@@ -147,7 +147,6 @@ class Fruit {
       this.input.value = e.target.closest("LI").innerText;
       this.suggestions.innerHTML = "";
     }
-    console.log(e.target.tagName);
   }
 }
 const fruits = new Fruit();
