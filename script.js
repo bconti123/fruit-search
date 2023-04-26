@@ -92,9 +92,7 @@ class Fruit {
     this.html.addEventListener("click", this.useSuggestion.bind(this));
     this.body.addEventListener("click", this.useSuggestion.bind(this));
   }
-  search(str) {
-    let results = [];
-
+  search(str, results = []) {
     if (str.length === 0) return []; // if str value is empty
 
     // Finding word if more than -1. Push word to the result.
